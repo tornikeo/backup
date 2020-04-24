@@ -1,0 +1,31 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/PC.hdl
+
+/**
+ * A 16-bit counter with load and reset control bits.
+ * if      (reset[t] == 1) out[t+1] = 0
+ * else if (load[t] == 1)  out[t+1] = in[t]
+ * else if (inc[t] == 1)   out[t+1] = out[t] + 1  (integer addition)
+ * else                    out[t+1] = out[t]
+ */
+
+CHIP PC {
+    IN in[16],load,inc,reset;
+    OUT out[16];
+
+    PARTS:
+    Not(in=load, out=notload);
+    Or(a=load, b=notload, out=true);
+    Or(a = o1, b = inc, out = o2);
+    Or(a = reset, b = load, out = o1);
+    And(a=load, b=notload, out=false);
+    Add16(a = outd, b[0] = true, b[1]=false, b[2]=false, b[3]=false, b[4]=false, b[5]=false, b[6]=false, b[7]=false,
+         b[8]=false, b[9]=false, b[10]=false, b[11]=false, b[12]=false, b[13]=false, b[14]=false, b[15]=false, out = o3);
+    Mux16(a = outd, b = o3, sel = inc, out = o4);
+    Mux16(a = o4, b = in, sel = load, out = laterload);
+    Mux16(a = laterload, b[0] = false, b[1]=false, b[2]=false, b[3]=false, b[4]=false, b[5]=false, b[6]=false, b[7]=false,b[8]=false, 
+         b[9]=false, b[10]=false, b[11]=false, b[12]=false, b[13]=false, b[14]=false, b[15]=false, sel = reset, out = o5);
+    Register(in = o5, load = o2, out = outd, out = out);
+}

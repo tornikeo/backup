@@ -1,0 +1,8 @@
+CHIP Shifter {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+        Not16(in[0]=false, in[1..15]=in[0..14],  out=notout);
+        Not16(in=notout, out=out);
+}

@@ -1,0 +1,14 @@
+CHIP Shift1 {
+  IN ]in[16;
+  OUT out[16];
+
+  PARTS:
+  Not16(in[0]=false, in[1..15]=in[0..14], out=notResult);
+  Not16(in=notResult, out=out);
+  // out[1..15]=in[0..14]
+  // out[0]=false
+  
+  // 0100
+  // 0010
+
+}

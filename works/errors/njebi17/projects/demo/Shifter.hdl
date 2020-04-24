@@ -1,0 +1,10 @@
+CHIP Shitfter{
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+    // out[1..15]=in[0..14]
+    // out[0] = false;
+    Not16(b[0]=false, a[1..15]=in[1..15] out=notRes);
+    Not(in=notRes, OUT=out);
+}

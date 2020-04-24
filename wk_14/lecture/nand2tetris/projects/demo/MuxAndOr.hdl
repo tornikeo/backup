@@ -1,0 +1,10 @@
+
+CHIP MuxAndOr {
+  IN a, b, sel;
+  OUT out;
+
+  PARTS:
+  // And(a=a, b=b, out=outAnd);
+  // Or(a=a, b=b, out=outOr);
+  // Mux(a=outAnd, b=outOr, sel=sel, out=out);
+}

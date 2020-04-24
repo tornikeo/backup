@@ -1,0 +1,28 @@
+/**
+ * Exclusive-or gate:
+ * out = not (a == b)
+ */
+
+CHIP Xor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    Nand(a=a, b=b, out=nandab);
+    Nand(a=a, b=a, out=nota);
+    Nand(a=b, b=b, out=notb);
+    
+    Nand(a=nota,b=notb,out=aorb);
+    Nand(a=nandab, b=aorb, out=almostthere);
+    Nand(a=almostthere,b=almostthere,out = out);
+ 
+}
+/**
+ * წინების გამოყენებით (ნაკლები ;-ით)
+ *(a or b) and (nota or notb) => (a or b) and not(a and b)=> 
+
+ * Or(a=a,b=b,out=aorb); //1
+ * Nand(a=a,b=b,out=nandab); //2
+ * And(a=aorb,b=nandab,out=out); //3
+
+ */
